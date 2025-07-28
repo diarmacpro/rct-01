@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { createBot } from '../lib/bots';
 import { Bot, ArrowLeft, AlertCircle, CheckCircle } from 'lucide-react';
 
 export const NewBot: React.FC = () => {
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -22,6 +25,12 @@ export const NewBot: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!user) {
+      setError('You must be logged in to create a bot');
+      return;
+    }
+    
     setError('');
     setIsSubmitting(true);
 
@@ -32,8 +41,14 @@ export const NewBot: React.FC = () => {
     }
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await createBot(user.id, {
+        name: formData.name,
+        description: formData.description,
+        type: formData.type,
+        language: formData.language,
+        personality: formData.personality,
+      });
+      
       setSuccess(true);
       
       // Redirect to dashboard after success
@@ -41,7 +56,7 @@ export const NewBot: React.FC = () => {
         navigate('/dashboard');
       }, 2000);
     } catch (err) {
-      setError('Failed to create bot. Please try again.');
+      setError(err instanceof Error ? err.message : 'Failed to create bot. Please try again.');
     } finally {
       setIsSubmitting(false);
     }

@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Bot, Eye, EyeOff, AlertCircle } from 'lucide-react';
 
 export const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
+  const [usernameOrEmail, setUsernameOrEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -15,16 +15,16 @@ export const Login: React.FC = () => {
     e.preventDefault();
     setError('');
 
-    if (!email || !password) {
+    if (!usernameOrEmail || !password) {
       setError('Please fill in all fields');
       return;
     }
 
     try {
-      await login(email, password);
+      await login(usernameOrEmail, password);
       navigate('/dashboard');
     } catch (err) {
-      setError('Invalid email or password');
+      setError(err instanceof Error ? err.message : 'Login failed');
     }
   };
 
@@ -51,19 +51,19 @@ export const Login: React.FC = () => {
             )}
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
+              <label htmlFor="usernameOrEmail" className="block text-sm font-medium text-gray-700">
+                Username or Email
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
+                id="usernameOrEmail"
+                name="usernameOrEmail"
+                type="text"
+                autoComplete="username"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={usernameOrEmail}
+                onChange={(e) => setUsernameOrEmail(e.target.value)}
                 className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                placeholder="Enter your email"
+                placeholder="Enter your username or email"
               />
             </div>
 

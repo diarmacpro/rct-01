@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+import { loginUser, registerUser } from '../lib/auth';
 import { AuthContextType, User } from '../types';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -22,43 +23,29 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const login = async (email: string, password: string): Promise<void> => {
+  const login = async (usernameOrEmail: string, password: string): Promise<void> => {
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const user = await loginUser(usernameOrEmail, password);
       
-      const mockUser: User = {
-        id: '1',
-        email,
-        name: email.split('@')[0],
-      };
-      
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      setUser(user);
+      localStorage.setItem('user', JSON.stringify(user));
     } catch (error) {
-      throw new Error('Login failed');
+      throw error;
     } finally {
       setIsLoading(false);
     }
   };
 
-  const register = async (name: string, email: string, password: string): Promise<void> => {
+  const register = async (username: string, name: string, email: string, password: string): Promise<void> => {
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const user = await registerUser(username, email, password, name);
       
-      const mockUser: User = {
-        id: '1',
-        email,
-        name,
-      };
-      
-      setUser(mockUser);
-      localStorage.setItem('user', JSON.stringify(mockUser));
+      setUser(user);
+      localStorage.setItem('user', JSON.stringify(user));
     } catch (error) {
-      throw new Error('Registration failed');
+      throw error;
     } finally {
       setIsLoading(false);
     }

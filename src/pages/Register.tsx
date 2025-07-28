@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { Bot, Eye, EyeOff, AlertCircle } from 'lucide-react';
 
 export const Register: React.FC = () => {
+  const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,7 +18,7 @@ export const Register: React.FC = () => {
     e.preventDefault();
     setError('');
 
-    if (!name || !email || !password || !confirmPassword) {
+    if (!username || !name || !email || !password || !confirmPassword) {
       setError('Please fill in all fields');
       return;
     }
@@ -33,10 +34,10 @@ export const Register: React.FC = () => {
     }
 
     try {
-      await register(name, email, password);
+      await register(username, name, email, password);
       navigate('/dashboard');
     } catch (err) {
-      setError('Registration failed. Please try again.');
+      setError(err instanceof Error ? err.message : 'Registration failed');
     }
   };
 
@@ -61,6 +62,23 @@ export const Register: React.FC = () => {
                 <span className="text-sm">{error}</span>
               </div>
             )}
+
+            <div>
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                Username
+              </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                autoComplete="username"
+                required
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                placeholder="Choose a username"
+              />
+            </div>
 
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
