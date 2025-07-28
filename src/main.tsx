@@ -8,7 +8,9 @@ import './index.css'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <div className="max-w-full h-screen overflow-x-hidden">
+        <App />
+      </div>
     </BrowserRouter>
   </React.StrictMode>,
 )
