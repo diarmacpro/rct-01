@@ -1,0 +1,12 @@
+token : nfp_3mqTscie7q3XAH96DAbL1zZ2aP8V18gyeeba
+site-id : 2d42d74f-913d-4f0d-afb7-1baca3e9a5fe
+
+curl -H "Authorization: Bearer nfp_3mqTscie7q3XAH96DAbL1zZ2aP8V18gyeeba" https://api.netlify.com/api/v1/sites
+
+curl -H "Authorization: Bearer nfp_3mqTscie7q3XAH96DAbL1zZ2aP8V18gyeeba" \
+"https://api.netlify.com/api/v1/sites/2d42d74f-913d-4f0d-afb7-1baca3e9a5fe/deploys"
+
+curl -H "Authorization: Bearer nfp_3mqTscie7q3XAH96DAbL1zZ2aP8V18gyeeba" \
+"https://api.netlify.com/api/v1/sites/2d42d74f-913d-4f0d-afb7-1baca3e9a5fe/deploys?per_page=1"
+
+https://api.netlify.com/api/v1/sites/2d42d74f-913d-4f0d-afb7-1baca3e9a5fe/deploys?per_page=1
