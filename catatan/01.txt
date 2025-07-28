@@ -10,3 +10,35 @@ curl -H "Authorization: Bearer nfp_3mqTscie7q3XAH96DAbL1zZ2aP8V18gyeeba" \
 "https://api.netlify.com/api/v1/sites/2d42d74f-913d-4f0d-afb7-1baca3e9a5fe/deploys?per_page=1"
 
 https://api.netlify.com/api/v1/sites/2d42d74f-913d-4f0d-afb7-1baca3e9a5fe/deploys?per_page=1
+
+
+
+
+
+npm install tailwindcss @tailwindcss/vite
+
+vite.config
+    import { defineConfig } from 'vite'
+    import tailwindcss from '@tailwindcss/vite'
+
+    export default defineConfig({
+    plugins: [tailwindcss()],
+    })
+
+index.css
+    @import "tailwindcss";
+
+main.tsx
+    import './style.css'
+
+
+-----------------------------------
+
+
+# dari root proyek
+mkdir src/pages
+touch src/pages/Login.tsx
+touch src/pages/Register.tsx
+touch src/pages/Dashboard.tsx
+touch src/pages/NewBot.tsx
+touch src/pages/NotFound.tsx
